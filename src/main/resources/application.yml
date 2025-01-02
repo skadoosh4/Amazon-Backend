@@ -6,3 +6,10 @@ spring:
     username: root
     password: skadoosh
     driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+logging:
+  file:
+    name: logs.log
