@@ -35,7 +35,8 @@ build/
 ### API_KEY
 *.properties
 *.yml
-logs.log
+*.log
 *.gz
 mvnw
 mvnw.cmd
+.mvn/
