@@ -31,3 +31,11 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### API_KEY
+*.properties
+*.yml
+logs.log
+*.gz
+mvnw
+mvnw.cmd

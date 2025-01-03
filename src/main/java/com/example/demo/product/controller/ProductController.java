@@ -1,12 +1,8 @@
 package com.example.demo.product.controller;
 
-import com.example.demo.product.model.GetProductsQuery;
-import com.example.demo.product.model.ProductDTO;
-import com.example.demo.product.model.ProductSortBy;
-import com.example.demo.product.model.Region;
-import com.example.demo.product.service.DeleteProductById;
-import com.example.demo.product.service.GetProductById;
-import com.example.demo.product.service.GetProducts;
+import com.example.demo.product.model.*;
+import com.example.demo.product.service.*;
+import com.example.demo.product.model.ProductRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
@@ -19,12 +15,16 @@ public class ProductController {
     private final GetProducts getProducts;
     private final DeleteProductById deleteProductById;
     private final GetProductById getProductById;
+    private final CreateProduct createProduct;
+    private final UpdateProduct updateProduct;
 
     @Autowired
-    public ProductController(GetProducts getProducts , DeleteProductById deleteProductById , GetProductById getProductById) {
+    public ProductController(GetProducts getProducts , DeleteProductById deleteProductById , GetProductById getProductById , CreateProduct createProduct , UpdateProduct updateProduct) {
         this.getProducts = getProducts;
         this.deleteProductById = deleteProductById;
         this.getProductById = getProductById;
+        this.createProduct = createProduct;
+        this.updateProduct = updateProduct;
     }
 
     @GetMapping()
@@ -46,5 +46,15 @@ public class ProductController {
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteProductById(@PathVariable String id){
         return deleteProductById.execute(id);
+    }
+
+    @PostMapping
+    public ResponseEntity<ProductDTO> createProduct(@RequestBody ProductRequest request){
+        return createProduct.execute(request);
+    }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<ProductDTO> updateProduct(@RequestBody ProductRequest request , @PathVariable String id){
+        return updateProduct.execute(new UpdateProductPair(id , request));
     }
 }
